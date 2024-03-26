@@ -1,0 +1,5 @@
+qdrant_data/
+_build/
+corpora/
+docs/
+venv/
