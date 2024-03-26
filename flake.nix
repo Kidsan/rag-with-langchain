@@ -21,7 +21,7 @@
             export NLTK_DATA=./corpora/
             unset SOURCE_DATE_EPOCH
           '';
-          packages = with pkgs; [ bashInteractive python311 virtualenv poetry ] ++
+          packages = with pkgs; [ bashInteractive python311 ] ++
             (with pkgs.python311Packages; [
               pip
             ]);
