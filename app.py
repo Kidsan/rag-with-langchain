@@ -24,7 +24,7 @@ Answer the question based on the above context: {question}
 
 
 def main():
-    db = generate_data_store()
+    db = generate_data_store(False)
     while True:
         query_text = input(">>> ")
         found_docs = db.similarity_search_with_score(query_text)
@@ -35,16 +35,17 @@ def main():
         prompt = prompt_template.format(context=context_text, question=query_text)
         print(prompt)
 
-        llm.invoke(prompt)
+        res = llm.invoke(prompt)
+        print(res)
+        print("\n")
 
 
 def generate_data_store(recreate: bool = False):
     documents = load_documents("./docs/")
     chunks = split_text(documents)
-    embeddings = OllamaEmbeddings(model="llama2:7b")
     return Qdrant.from_documents(
         chunks,
-        embeddings,
+        OllamaEmbeddings(model="llama2:7b"),
         path="./qdrant_data",
         collection_name="my_documents",
         force_recreate=recreate,
